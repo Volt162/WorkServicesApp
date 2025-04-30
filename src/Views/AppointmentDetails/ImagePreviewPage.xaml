@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<b:BaseModalPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:b="clr-namespace:MopsterTeams.Views.Base"
+    xmlns:controls="clr-namespace:MopsterTeams.Controls"
+    x:Class="MopsterTeams.Views.ImagePreviewPage"
+    Background="Transparent" BackgroundColor="Transparent">
+
+    <Grid ColumnDefinitions="0.1*,0.8*,0.1*" RowDefinitions="0.2*,0.6*,0.2*">
+        <BoxView Grid.ColumnSpan="3" Grid.RowSpan="3" BackgroundColor="Black" Opacity="0.3">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+        <Grid BackgroundColor="White" Grid.Column="1" Grid.Row="1" IsClippedToBounds="True">
+            <ActivityIndicator Color="{StaticResource Primary_2}" VerticalOptions="Center" HorizontalOptions="Center"
+                               IsVisible="{Binding IsLoading}" IsRunning="{Binding IsLoading}"/>
+            <controls:PinchToZoomContainer>
+                <Image Source="{Binding ImageSource}"/>
+            </controls:PinchToZoomContainer>
+        </Grid>
+    </Grid>
+
+</b:BaseModalPage>

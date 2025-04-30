@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localize="clr-namespace:MopsterTeams.Services.Localization"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui"
+    xmlns:controls="clr-namespace:MopsterTeams.Controls"
+    x:Class="MopsterTeams.Views.ServicesTabView">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <StackLayout BindableLayout.ItemsSource="{Binding Services}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <BoxView Margin="0,6,0,0" VerticalOptions="Start" HeightRequest="1" BackgroundColor="{StaticResource Grey_3}"/>
+                        <Label  Text="{Binding ServiceName}" Grid.Row="1"
+                                VerticalOptions="End" HorizontalOptions="Start"
+                                TextColor="{StaticResource Primary}"
+                                FontSize="{StaticResource LargeSize}"
+                                FontFamily="{StaticResource OpenSansSemiBold}"/>
+
+                        <StackLayout Orientation="Horizontal" Spacing="0">
+                            <Label Text="{Binding Quantity}" Grid.Row="2"
+                                VerticalOptions="End" HorizontalOptions="Start"
+                                TextColor="{StaticResource Grey_2}"
+                                FontSize="{StaticResource MediumSize}"
+                                FontFamily="{StaticResource OpenSansRegular}"/>
+                            <Label Text="{Binding CalculationUnitName, StringFormat=' {0},'}" Grid.Row="2"
+                                VerticalOptions="End" HorizontalOptions="Start"
+                                TextColor="{StaticResource Grey_2}"
+                                FontSize="{StaticResource MediumSize}"
+                                FontFamily="{StaticResource OpenSansRegular}"/>
+                            <Label Text="{Binding SalesUnitQuantity, StringFormat=' {0}'}" Grid.Row="2"
+                                VerticalOptions="End" HorizontalOptions="Start"
+                                TextColor="{StaticResource Grey_2}"
+                                FontSize="{StaticResource MediumSize}"
+                                FontFamily="{StaticResource OpenSansRegular}"/>
+                            <Label Text="{Binding SalesUnitName, StringFormat=' {0}'}" Grid.Row="2"
+                                VerticalOptions="End" HorizontalOptions="Start"
+                                TextColor="{StaticResource Grey_2}"
+                                FontSize="{StaticResource MediumSize}"
+                                FontFamily="{StaticResource OpenSansRegular}"/>
+
+                            <StackLayout.Triggers>
+                                <MultiTrigger TargetType="StackLayout">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Quantity}" Value="0" />
+                                        <BindingCondition Binding="{Binding SalesUnitQuantity}" Value="0" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="False" />
+                                </MultiTrigger>
+                            </StackLayout.Triggers>
+                        </StackLayout>
+
+                        <Label Text="{localize:Translate AttachedFiles}" Grid.Row="3"
+                                VerticalOptions="End" HorizontalOptions="Start"
+                                TextColor="{StaticResource Grey_4}"
+                                FontSize="{StaticResource MidMediumSize}"
+                                FontFamily="{StaticResource OpenSansRegular}">
+                        </Label>
+
+                        <Grid>
+                            <Label Text="{localize:Translate NoAttachments}"
+                                   Margin="15,0"
+                                VerticalOptions="Center" HorizontalOptions="Start"
+                                TextColor="{StaticResource Grey_6}"
+                                FontSize="{StaticResource MediumSize}"
+                                FontFamily="{StaticResource OpenSansRegular}"/>
+                            <StackLayout>
+                                <ScrollView Orientation="Horizontal"
+                                            HorizontalScrollBarVisibility="Never"
+                                            Grid.Row="4" VerticalOptions="Start"
+                                            HeightRequest="100" BackgroundColor="White">
+                                    <StackLayout Orientation="Horizontal" Spacing="10" BackgroundColor="White"
+                                                 BindableLayout.ItemsSource="{Binding Photos}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Padding="1"
+                                                        Stroke="{StaticResource Grey_3}"
+                                                        StrokeShape="RoundRectangle 5"
+                                                        StrokeThickness="1"  >
+                                                    <ffimageloading:CachedImage Source="{Binding Source}" Margin="5" Aspect="AspectFill"   WidthRequest="100" HeightRequest="100">
+                                                        <ffimageloading:CachedImage.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding TapCommand}"/>
+                                                        </ffimageloading:CachedImage.GestureRecognizers>
+                                                    </ffimageloading:CachedImage>
+                                                </Border>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+
+                                    <ScrollView.Triggers>
+                                        <DataTrigger TargetType="ScrollView" Binding="{Binding Photos.Count}" Value="0">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </ScrollView.Triggers>
+                                </ScrollView>
+
+                                <StackLayout Grid.Row="5" Padding="0,8,0,5" Orientation="Vertical" Spacing="6" BackgroundColor="White"
+                                             BindableLayout.ItemsSource="{Binding OtherAttachments}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
+                                                <Image Source="ic_file"/>
+                                                <Label Text="{Binding Name}" Grid.Column="1"
+                                                    VerticalOptions="Center"
+                                                    TextColor="{StaticResource Grey_2}"
+                                                    LineBreakMode="TailTruncation"
+                                                    FontSize="{StaticResource MediumSize}"
+                                                    FontFamily="{StaticResource OpenSansRegular}"/>
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding TapCommand}"/>
+                                                </Grid.GestureRecognizers>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+
+                                    <StackLayout.Triggers>
+                                        <DataTrigger TargetType="StackLayout" Binding="{Binding OtherAttachments.Count}" Value="0">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </StackLayout.Triggers>
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+
+                        <Label Text="{localize:Translate Comment}" Grid.Row="6"
+                                VerticalOptions="End" HorizontalOptions="Start"
+                                TextColor="{StaticResource Grey_4}"
+                                FontSize="{StaticResource MidMediumSize}"
+                                FontFamily="{StaticResource OpenSansRegular}">
+                        </Label>
+
+                        <Grid Grid.Row="7">
+                            
+                            <controls:ExpandParagraphControl  Text="{Binding Comment}"
+                                                              x:Name="paragraph"
+                                                              TextColor="{StaticResource Grey_2}"
+                                                              TextFontSize="{StaticResource MediumSize}"
+                                                              DefaultButtonTitle="{localize:Translate ShowMore}"/>
+                            <Label Text="{localize:Translate NoComments}"
+                                   Margin="15,0"
+                                   IsVisible="{Binding Comment, Converter={StaticResource StringToBoolConverter}}"
+                                   VerticalOptions="Center" HorizontalOptions="Start"
+                                   TextColor="{StaticResource Grey_6}"
+                                   FontSize="{StaticResource MediumSize}"
+                                   FontFamily="{StaticResource OpenSansRegular}">
+                            </Label>
+                        </Grid>
+                    </StackLayout>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+    </ScrollView>
+
+</ContentView>

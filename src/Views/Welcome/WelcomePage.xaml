@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<b:ContentPageBase
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MopsterTeams.Views.WelcomePage"
+    xmlns:b="clr-namespace:MopsterTeams.Views.Base"
+    xmlns:controls="clr-namespace:MopsterTeams.Controls"
+    xmlns:localize="clr-namespace:MopsterTeams.Services.Localization"
+    xmlns:converters="clr-namespace:MopsterTeams.Converters"
+    xmlns:enum="clr-namespace:MopsterTeams.Enums"
+    xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+    android:Application.WindowSoftInputModeAdjust="Pan"
+    Shell.NavBarIsVisible="False"
+    Shell.FlyoutBehavior="Disabled"
+    BackgroundColor="{StaticResource Primary_2}">
+
+    <ContentPage.Resources>
+      <ResourceDictionary>
+          <converters:ButtonStateToObjectConverter x:Key="FrButtonTextColorConverter" DefaultState="{StaticResource Green_1}" SecondState="{StaticResource Green_1}" DisableState="White"/>
+          <converters:ButtonStateToObjectConverter x:Key="FrButtonBgColorConverter"   DefaultState="{StaticResource Green_2}" SecondState="{StaticResource Green_2}" DisableState="{StaticResource Primary}"/>
+      </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never">
+    <Grid x:Name="mainGrid" BackgroundColor="White">
+        <Image Source="ic_w_bg" Aspect="Fill" VerticalOptions="Start"/>
+        <BoxView x:Name="bottomBoxView" HeightRequest="50" VerticalOptions="End" BackgroundColor="{StaticResource Primary_2}"/>
+        <Image Source="ic_wb_bg" Aspect="Fill" VerticalOptions="End"/>
+        
+        <Grid Padding="25,0" RowDefinitions="Auto,1*,Auto,Auto" RowSpacing="0">
+            
+            <BoxView Grid.Row="1" Grid.RowSpan="2" CornerRadius="8" Opacity="0.9" BackgroundColor="White"/>
+            
+            <Label Text="{localize:Translate Welcome}"
+                   Margin="0,14"
+                   VerticalOptions="End" HorizontalOptions="Center"
+                   TextColor="White"
+                   FontSize="{StaticResource ExtraBigSize}"
+                   FontFamily="{StaticResource OpenSansBold}"/>
+            <StackLayout Grid.Row="1" Spacing="0" Padding="18,18,24,18">
+                <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never">
+                <StackLayout>
+                <Label x:Name="descriptionLabel" Text="{localize:Translate AbleToLogIn}"
+                       Margin="0,0,0,12"
+                       TextColor="{StaticResource Grey_2}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       FontSize="{StaticResource MidMediumSize}"
+                       FontFamily="{StaticResource OpenSansRegular}"
+                       IsVisible="{Binding IsShowPasswordInfo}"/>
+                <Label x:Name="firstPointLabel" Text="{localize:Translate EnterDataManually}"
+                       TextColor="{StaticResource Grey_2}"
+                       HorizontalOptions="Start"
+                       HorizontalTextAlignment="Start"
+                       FontSize="{StaticResource MidMediumSize}"
+                       FontFamily="{StaticResource OpenSansRegular}"
+                       IsVisible="{Binding IsShowPasswordInfo}"/>
+                <Frame  Padding="0" Margin="0,7,0,7" BorderColor="{StaticResource Primary}" CornerRadius="5" HasShadow="False">
+                    <Editor x:Name="editor"
+                            Text="{Binding BaseUrl}"
+                            TextColor="{StaticResource Grey_2}"
+                            PlaceholderColor="{StaticResource Grey_6}"
+                            FontSize="{StaticResource MidMediumSize}"
+                            FontFamily="{StaticResource OpenSansRegular}"
+                            Placeholder="https://"
+                            HeightRequest="45"
+                            Margin="6,5,3,10"/>
+                </Frame>
+                <Label x:Name="secondPointLabel" Text="{localize:Translate ScanQRCode}"
+                       TextColor="{StaticResource Grey_2}"
+                       HorizontalOptions="Start"
+                       HorizontalTextAlignment="Start"
+                       FontSize="{StaticResource MidMediumSize}"
+                       FontFamily="{StaticResource OpenSansRegular}"
+                       IsVisible="{Binding IsShowPasswordInfo}"/>
+                    <Image x:Name="qr" Source="ic_qr" Margin="0,7,0,10"  VerticalOptions="End"/>
+                </StackLayout>
+            </ScrollView>
+            <StackLayout VerticalOptions="EndAndExpand">
+                <Frame VerticalOptions="EndAndExpand" HorizontalOptions="Fill"
+                       Margin="0,8,0,8"
+                       Padding="0" BorderColor="{StaticResource Primary}"
+                       CornerRadius="5" HasShadow="False">
+                    <controls:ScaleButton Command="{Binding ScanCommand}" VerticalOptions="Center"
+                                      Text="{localize:Translate StartScanning}"
+                                      Margin="3"
+                                      TextColor="{StaticResource Primary}"
+                                      BackgroundColor="White">
+                    </controls:ScaleButton>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ScanCommand}"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <controls:ScaleButton Text="{localize:Translate GoToLogIn}" IsUpperCaseTitle="True" InputTransparent="True"
+                                  Command="{Binding GoToLoginCommand}"
+                                  TextColor="{Binding CheckInState, Converter={StaticResource FrButtonTextColorConverter}}"
+                                  BackgroundColor="{Binding CheckInState, Converter={StaticResource FrButtonBgColorConverter}}">
+                    <controls:ScaleButton.Triggers>
+                        <DataTrigger TargetType="controls:ScaleButton"
+                                    Binding="{Binding CheckInState}"
+                                    Value="{Static enum:EButtonState.DisableState}">
+                            <Setter Property="InputTransparent" Value="False" />
+                        </DataTrigger>
+                    </controls:ScaleButton.Triggers>
+                </controls:ScaleButton>
+                </StackLayout>
+            </StackLayout>
+
+            <Grid Grid.Row="3" Padding="0,10" ColumnDefinitions="1*,1*" ColumnSpacing="10"  VerticalOptions="End">
+                <Label Grid.Column="0"
+                       VerticalOptions="Center"
+                       HorizontalOptions="End"
+                       Text="{localize:Translate PoweredBy}"
+                       TextColor="White"
+                       FontSize="{StaticResource MiniSize}"
+                       FontFamily="{StaticResource OpenSansRegular}"/>
+                <Image Grid.Column="1" Source="ic_logo_white"
+                       HeightRequest="30"
+                       VerticalOptions="Center" HorizontalOptions="Start"
+                       Opacity="1"/>
+            </Grid>
+        </Grid>
+    </Grid>
+        </ScrollView>
+</b:ContentPageBase>

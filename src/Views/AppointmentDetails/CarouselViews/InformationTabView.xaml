@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MopsterTeams.ViewModels"
+    xmlns:localize="clr-namespace:MopsterTeams.Services.Localization"
+    xmlns:controls="clr-namespace:MopsterTeams.Controls"
+    x:Class="MopsterTeams.Views.InformationTabView">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <StackLayout Spacing="7" Margin="1">
+
+            <controls:ImageEntry Text="{Binding Date}" Placeholder="{localize:Translate StartDate}" Source="ic_calendar_dusk" IsEntryEnabled="False" />
+            <Grid ColumnSpacing="10" ColumnDefinitions="1*,1*">
+                <controls:ImageEntry Grid.Column="0" Text="{Binding StartTime}" Placeholder="{localize:Translate StartTime}" Source="ic_alarm_dusk" IsEntryEnabled="False" />
+                <controls:ImageEntry Grid.Column="1" Text="{Binding EndTime}" Placeholder="{localize:Translate EstimatedEndTime}" Source="ic_alarm_dusk" IsEntryEnabled="False" />
+            </Grid>
+            <controls:ImageEntry Text="{Binding Customer}" Placeholder="{localize:Translate Customer}" IsEntryEnabled="False"/>
+            <controls:ImageEntry Text="{Binding Address}" Placeholder="{localize:Translate Address}" ImageButtonCommand="{Binding OpenMapCommand}" Source="ic_address" IsEntryEnabled="False"/>
+            <controls:ImageEntry Text="{Binding Email}" Placeholder="{localize:Translate Email}" ImageButtonCommand="{Binding OpenEmailCommand}" Source="ic_email" IsEntryEnabled="False"/>
+            <controls:ImageEntry Text="{Binding MobilePhoneNumber}" Placeholder="{localize:Translate PhoneNumber}" ImageButtonCommand="{Binding OpenPhoneDialerCommand}" Source="ic_phone" IsEntryEnabled="False"/>
+        
+        </StackLayout>
+    </ScrollView>
+</ContentView>

@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="true"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:converters="clr-namespace:MopsterTeams.Converters"
+             android:Application.WindowSoftInputModeAdjust="Resize"
+             x:Class="MopsterTeams.App">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#008FB3</Color>
+            <Color x:Key="Primary_2">#00AAD4</Color>
+            <Color x:Key="TextColor">#000000</Color>
+            <Color x:Key="TextColorDark">White</Color>
+            <Color x:Key="Green">#38C9C9</Color>
+            <Color x:Key="Green_1">#4DDCFF</Color>
+            <Color x:Key="Green_2">#E5FAFF</Color>
+            <Color x:Key="Green_3">#40A30E</Color>
+            <Color x:Key="Blue">#37A1ED</Color>
+            <Color x:Key="Orange">#F2A483</Color>
+            <Color x:Key="Violet">#BD7FF0</Color>
+            <Color x:Key="Grey_1">#546480</Color>
+            <Color x:Key="Grey_2">#12213B</Color>
+            <Color x:Key="Grey_3">#E4E7ED</Color>
+            <Color x:Key="Grey_4">#7E8CA3</Color>
+            <Color x:Key="Grey_5">#F6F7F9</Color>
+            <Color x:Key="Grey_6">#A4AEBF</Color>
+            
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#7E8CA3" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="#770754"/>
+                <Setter Property="BarTextColor" Value="White"/>
+            </Style>
+
+            <!--  CONVERTERS  -->
+            <converters:StrongPasswordConverter x:Key="StrongPasswordConverter" />
+            <converters:CalendarCellTypeToColorConverter x:Key="CalendarCellTypeToColorConverter" />
+            <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
+            <converters:DateTimeToTimeRecordsStrFormatConverter x:Key="DateTimeToTimeRecordsStrFormatConverter" />
+
+            <OnPlatform x:Key="BaseButtonFontSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="18" />
+                <On Platform="Android" Value="16" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BaseFontSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="14" />
+                <On Platform="Android" Value="16" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MicroSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="9" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="10" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MiniSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="10" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="11" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LittleSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="11" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="12" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MidMediumSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="12" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="14" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MediumSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="14" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="16" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LargeSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="16" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="18" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LargerSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="18" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="20" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BigSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="20" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="24" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="ExtraBigSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="25" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="30" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="HugeSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="32" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="48" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BaseButtonFontAttributes" x:TypeArguments="FontAttributes">
+                <On Platform="iOS" Value="Bold" />
+                <On Platform="Android" Value="None" />
+            </OnPlatform>
+
+            <!--  EXPLICIT STYLES  -->
+            <Style x:Key="BaseLabel" TargetType="Label">
+                <Setter Property="TextColor" 
+                        Value="{AppThemeBinding Dark={StaticResource TextColorDark},
+                    Light={StaticResource TextColor}}" />
+            </Style>
+
+            <!--  IMPLICIT STYLES  -->
+            <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
+                <Setter Property="NavigationPage.BackButtonTitle" Value="" />
+                <Setter Property="ios:Page.UseSafeArea" Value="True" />
+            </Style>
+
+            <Style TargetType="Frame">
+                <Setter Property="BackgroundColor" 
+                        Value="White" />
+            </Style>
+
+            <Style TargetType="Editor">
+                <Setter Property="BackgroundColor" 
+                        Value="White" />
+            </Style>
+
+        </ResourceDictionary>        
+    </Application.Resources>
+</Application>

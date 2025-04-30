@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    
+    xmlns:controls="clr-namespace:MopsterTeams.Controls"
+    x:Class="MopsterTeams.Controls.ImageEntry"
+    x:Name="_this">
+
+    <ContentView.Resources>
+        <Style x:Key="entry" TargetType="Entry">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor"
+                                        Value="{StaticResource Grey_2}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+
+    <Grid BindingContext="{Reference _this}" RowDefinitions="Auto, 40" RowSpacing="0">
+        <Label Text="{Binding Placeholder}"
+               TextColor="{Binding PlaceholderTextColor}"
+               FontSize="{StaticResource LittleSize}"
+               FontFamily="{StaticResource OpenSansSemiBold}"/>
+
+        <Frame Grid.Row="1" Padding="0" CornerRadius="4" BackgroundColor="{Binding FrameBackgroundColor}"
+               BorderColor="{Binding FrameBorderColor}"
+               HasShadow="False">
+            <Grid ColumnDefinitions="1*,Auto" BackgroundColor="Transparent">
+                <Label Margin="10,0,0,0"
+                       Text="{Binding Text}"
+                       TextColor="{StaticResource Grey_2}"
+                       FontSize="{StaticResource BaseFontSize}"
+                       FontFamily="{StaticResource OpenSansRegular}"
+                       LineBreakMode="TailTruncation"
+                       VerticalTextAlignment="Center"
+                       VerticalOptions="Center"/>
+
+                    <ImageButton Grid.Column="1" VerticalOptions="Center" BackgroundColor="Transparent"
+                                 x:Name="image"
+                                 IsVisible="False"
+                                 Padding="{OnPlatform Android='10,5,10,5', iOS='0,5,6,5'}"
+                                 HorizontalOptions="End"
+                                 Source="{Binding Source}"
+                                 Command="{Binding ImageButtonCommand}">
+                    </ImageButton>
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentView>

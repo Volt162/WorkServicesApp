@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<b:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MopsterTeams.Views.AppointmentDetailPage"
+             xmlns:b="clr-namespace:MopsterTeams.Views.Base"
+		     xmlns:localize="clr-namespace:MopsterTeams.Services.Localization"
+			 xmlns:m="clr-namespace:MopsterTeams.Models"
+			 xmlns:controls="clr-namespace:MopsterTeams.Controls"
+             xmlns:enum="clr-namespace:MopsterTeams.Enums"
+             xmlns:converters="clr-namespace:MopsterTeams.Converters"
+             xmlns:vm="clr-namespace:MopsterTeams.ViewModels"
+             xmlns:local="clr-namespace:MopsterTeams.Views.CarouselViews"
+			 x:DataType="vm:AppointmentDetailViewModel"
+             Shell.TabBarIsVisible="{OnPlatform iOS='False'}">
+
+    <ContentPage.Resources>
+      <ResourceDictionary>
+          <local:TabViewsDataTemplateSelector x:Key="TabViewsDataTemplateSelector"/>
+          <converters:ButtonStateToObjectConverter x:Key="ButtonTitleConverter"     DefaultState="{localize:Translate CheckIn}" SecondState="{localize:Translate CheckOut}" DisableState="{localize:Translate CheckOut}" CheckInDisableState="{localize:Translate CheckIn}"/>
+          <converters:ButtonStateToObjectConverter x:Key="ButtonImageConverter"     DefaultState="ic_checkin_white"             SecondState="ic_checkout_white"             DisableState="ic_checkout_green_2"           CheckInDisableState="ic_checkout_green_2"/>
+          <converters:ButtonStateToObjectConverter x:Key="ButtonTextColorConverter" DefaultState="White"                        SecondState="White"                         DisableState="{StaticResource Green_1}"      CheckInDisableState="{StaticResource Green_1}"/>
+          <converters:ButtonStateToObjectConverter x:Key="ButtonBgColorConverter"   DefaultState="{StaticResource Primary}"     SecondState="{StaticResource Primary}"      DisableState="{StaticResource Green_2}"      CheckInDisableState="{StaticResource Green_2}"/>
+
+          <converters:ButtonStateToObjectConverter x:Key="FrButtonImageConverter"     DefaultState="ic_file_report_green_2"   SecondState="ic_file_report_green_2"   DisableState="ic_file_report_white"     CheckInDisableState="ic_file_report_green_2"/>
+          <converters:ButtonStateToObjectConverter x:Key="FrButtonTextColorConverter" DefaultState="{StaticResource Green_1}" SecondState="{StaticResource Green_1}" DisableState="White"                    CheckInDisableState="{StaticResource Green_1}"/>
+          <converters:ButtonStateToObjectConverter x:Key="FrButtonBgColorConverter"   DefaultState="{StaticResource Green_2}" SecondState="{StaticResource Green_2}" DisableState="{StaticResource Primary}" CheckInDisableState="{StaticResource Green_2}"/>
+      </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowSpacing="0" RowDefinitions="Auto,1*,Auto">
+		<controls:ExtendedNavigationBar Padding="0" PageTitle="{Binding Title}" GoBackCommand="{Binding GoBackCommand}"/>
+
+        <Grid Padding="15,18,15,0" Grid.Row="1"
+              ColumnSpacing="0"
+              ColumnDefinitions="1*,1*"
+              RowDefinitions="Auto,1*">
+
+            <Grid HeightRequest="40">
+                <Frame HasShadow="False" InputTransparent="True" BorderColor="{StaticResource Grey_5}" Padding="0">
+                    <Label Text="{localize:Translate Information}"
+                           VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            TextColor="{StaticResource Grey_4}"
+                            FontSize="{StaticResource MidMediumSize}"
+                            FontFamily="{StaticResource OpenSansRegular}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                        Binding="{Binding PositionSelected}"
+                                        Value="0">
+                                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                                <Setter Property="FontFamily" Value="{StaticResource OpenSansSemiBold}" />
+                            </DataTrigger>
+                         </Label.Triggers>
+                    </Label>
+                </Frame>
+                <BoxView InputTransparent="True" BackgroundColor="{StaticResource Grey_3}" VerticalOptions="End" HeightRequest="3">
+                    <BoxView.Triggers>
+                        <DataTrigger TargetType="BoxView"
+                                    Binding="{Binding PositionSelected}"
+                                    Value="0">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Primary_2}" />
+                        </DataTrigger>
+                    </BoxView.Triggers>
+                </BoxView>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectItemCommand}"
+                        CommandParameter="0"/>
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Grid HeightRequest="40" Grid.Column="1">
+                <Frame HasShadow="False" InputTransparent="True" BorderColor="{StaticResource Grey_5}" Padding="0">
+                    <Label Text="{Binding SecondTabTitle}"
+                           VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            TextColor="{StaticResource Grey_4}"
+                            FontSize="{StaticResource MidMediumSize}"
+                            FontFamily="{StaticResource OpenSansRegular}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                        Binding="{Binding PositionSelected}"
+                                        Value="1">
+                                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                                <Setter Property="FontFamily" Value="{StaticResource OpenSansSemiBold}" />
+                            </DataTrigger>
+                         </Label.Triggers>
+                    </Label>
+                </Frame>
+                <BoxView InputTransparent="True" BackgroundColor="{StaticResource Grey_3}" VerticalOptions="End" HeightRequest="3">
+                    <BoxView.Triggers>
+                        <DataTrigger TargetType="BoxView"
+                                    Binding="{Binding PositionSelected}"
+                                    Value="1">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Primary_2}" />
+                        </DataTrigger>
+                    </BoxView.Triggers>
+                </BoxView>
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectItemCommand}"
+                        CommandParameter="1"/>
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <CarouselView Grid.Column="0"
+                     BackgroundColor="White"
+                     Grid.ColumnSpan="2"
+                     Grid.Row="1"
+                     ItemTemplate="{StaticResource TabViewsDataTemplateSelector}"
+                     IsSwipeEnabled="False"
+                     IsScrollAnimated="False"
+                     HorizontalScrollBarVisibility="Never"
+                     Position="{Binding PositionSelected}"
+                     ItemsSource="{Binding CarouselTabs}">
+            </CarouselView>
+        </Grid>
+
+        <Image Grid.Row="1" Source="ic_bottom_shadow"  VerticalOptions="End" Aspect="AspectFill" HeightRequest="10"/>
+        <Grid BackgroundColor="White"
+              IsVisible="False"
+              VerticalOptions="End"
+              HeightRequest="55"
+              Grid.Row="2"
+              ColumnSpacing="0"
+              ColumnDefinitions="1*,1*">
+            <controls:ScaleButton Command="{Binding CheckInCommand}" VerticalOptions="Center" Padding="10,10,5,10" Grid.Column="0"
+                                  Text="{Binding CheckInState, Converter={StaticResource ButtonTitleConverter}}"
+                                  Source="{Binding CheckInState, Converter={StaticResource ButtonImageConverter}}"
+                                  TextColor="{Binding CheckInState, Converter={StaticResource ButtonTextColorConverter}}"
+                                  BackgroundColor="{Binding CheckInState, Converter={StaticResource ButtonBgColorConverter}}">
+                <controls:ScaleButton.Triggers>
+                    <DataTrigger TargetType="controls:ScaleButton"
+                                Binding="{Binding CheckInState}"
+                                Value="{Static enum:EButtonState.DisableState}">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="controls:ScaleButton"
+                                Binding="{Binding CheckInState}"
+                                Value="{Static enum:EButtonState.CheckInDisableState}">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </controls:ScaleButton.Triggers>
+            </controls:ScaleButton>
+            <controls:ScaleButton VerticalOptions="Center" Padding="5,10,10,10" Grid.Column="1" Text="{localize:Translate FileReport}" IsEnabled="False"
+                                  Command="{Binding FileReportCommand}"
+                                  Source="{Binding CheckInState, Converter={StaticResource FrButtonImageConverter}}"
+                                  TextColor="{Binding CheckInState, Converter={StaticResource FrButtonTextColorConverter}}"
+                                  BackgroundColor="{Binding CheckInState, Converter={StaticResource FrButtonBgColorConverter}}">
+                <controls:ScaleButton.Triggers>
+                    <DataTrigger TargetType="controls:ScaleButton"
+                                Binding="{Binding CheckInState}"
+                                Value="{Static enum:EButtonState.DisableState}">
+                        <Setter Property="IsEnabled" Value="True" />
+                    </DataTrigger>
+                </controls:ScaleButton.Triggers>
+            </controls:ScaleButton>
+
+            <Grid.Triggers>
+                <DataTrigger TargetType="Grid"
+                            Binding="{Binding IsInitialize}"
+                            Value="False">
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+            </Grid.Triggers>
+        </Grid>
+    </Grid>
+</b:ContentPageBase>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:controls="clr-namespace:MopsterTeams.Controls"
+    x:Class="MopsterTeams.Controls.LoginEntry"
+    x:Name="_this">
+
+    <Grid BindingContext="{Reference _this}" RowDefinitions="Auto, 43" RowSpacing="0">
+        <Label Text="{Binding Placeholder}"
+               TextColor="{StaticResource Grey_1}"
+               FontSize="{StaticResource LittleSize}"
+               FontFamily="{StaticResource OpenSansSemiBold}"/>
+
+        <Frame Grid.Row="1" Padding="0" CornerRadius="4" BackgroundColor="White"
+               BorderColor="{StaticResource Grey_3}"
+               HasShadow="False">
+            <Grid ColumnDefinitions="1*,Auto">
+                <Entry x:Name="entry" Margin="10,0,0,0"
+                       Text="{Binding Text}"
+                        ios:Entry.CursorColor="{StaticResource Primary}"
+                        TextColor="{StaticResource Grey_2}"
+                        Keyboard="{Binding Keyboard}"
+                        FontSize="{StaticResource BaseFontSize}"
+                        FontFamily="{StaticResource OpenSansRegular}"
+                        IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword, Mode=OneWay}"/>
+
+                    <ImageButton Grid.Column="1" VerticalOptions="Center" BackgroundColor="Transparent"
+                                 IsVisible="{Binding HasPassword}"
+                                Padding="10,5,10,5"
+                                HorizontalOptions="End"
+                                Opacity="0.5"
+                                Source="ic_eye">
+                        <ImageButton.Triggers>
+                            <EventTrigger Event="Clicked">
+                                <controls:ShowPasswordTriggerAction ShowIcon="ic_eye"
+                                                                HideIcon="ic_eye_hide"
+                                                                x:Name="ShowPasswordActualTrigger"/>
+                            </EventTrigger>
+                        </ImageButton.Triggers>
+                    </ImageButton>
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentView>
